@@ -44,7 +44,7 @@ This is where your screenshots shine! Embed them directly or link to them. Use c
 
 | Product List Screen                                     | Product Details Screen                                  |
 | :------------------------------------------------------ | :------------------------------------------------------ |
-| ![Product List Screenshot 1 Description](path/to/screenshot1.png) | ![Product Details Screenshot 1 Description](path/to/screenshot2.png) |
+| ![Product List Screenshot 1 Description](Screenshots/ProductListScreen.png) | ![Product Details Screenshot 1 Description](path/to/screenshot2.png) |
 | *[Brief caption for screenshot 1]* | *[Brief caption for screenshot 2]* |
 | ![Product List Screenshot 2 Description](path/to/screenshot3.png) | ![Product Details Screenshot 2 Description](path/to/screenshot4.png) |
 | *[Brief caption for screenshot 3 (e.g., Search functionality)]* | *[Brief caption for screenshot 4 (e.g., Error state)]* |
