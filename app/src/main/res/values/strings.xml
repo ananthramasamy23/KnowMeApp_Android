@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">KnowMeApp</string>
+    <string name="product_list_title">Product List</string>
+    <string name="wishlist_icon_description">Wishlist</string>
+    <string name="loading_products_error_description">Error loading products</string>
+    <string name="error_unknown_occurred">An unknown error occurred.</string>
+    <string name="retry_button_text">Retry</string>
+    <string name="retry_icon_description">Retry</string>
+    <string name="no_products_found">No products found.</string>
+    <string name="product_detail_title">Product Detail</string>
+    <string name="back_button_description">Back</string>
+    <string name="add_to_wishlist_description">Add to Wishlist</string>
+    <string name="remove_from_wishlist_description">Remove from Wishlist</string>
+    <string name="share_product_description">Share Product</string>
+    <string name="getting_location_message">Getting location…</string>
+    <string name="info_prefix">Info: %s</string>
+    <string name="error_icon_description">Error icon</string>
+    <string name="retry_action">Retry</string>
+    <string name="error_no_internet_connection">No internet connection</string>
+    <string name="address_not_available">Address not available.</string>
+    <string name="wishlist_title">My Wishlist</string>
+    <string name="back_to_previous_screen">Back to previous screen</string>
+    <string name="wishlist_empty_message">Your wishlist is empty!</string>
+    <string name="product_image_description">Product image of %s</string>
+    <string name="remove_from_wishlist">Remove from Wishlist</string>
+    <string name="error_network_prefix">Network error: %s</string>
+    <string name="error_server_prefix">Server error: %d</string>
+    <string name="error_unexpected_prefix">Unexpected error: %s</string>
+    <string name="location_permission_denied">Location permission denied.</string>
+    <string name="could_not_determine_address">Could not determine address.</string>
+    <string name="could_not_get_current_location">Could not get current location.</string>
+    <string name="location_unknown">Location unknown</string>
+    <string name="share_product_title">Share %s via</string>
+    <string name="share_product_text">Check out %1$s - Price: %2$s.\nFrom : %3$s</string>
+    <string name="location_services_disabled_message">Location services are disabled. Please enable them in settings.</string>
+    <string name="no_address_found_for_coordinates">No address found for these coordinates.</string>
+    <string name="geocoding_error_prefix">Geocoding error: %s</string>
+    <string name="geocoding_unknown_error">Unknown error</string>
+    <string name="geocoding_io_error_prefix">Geocoding I/O error: %s</string>
+    <string name="geocoding_invalid_coordinates_prefix">Geocoding invalid coordinates: %s</string>
+
+
+
+</resources>
+
