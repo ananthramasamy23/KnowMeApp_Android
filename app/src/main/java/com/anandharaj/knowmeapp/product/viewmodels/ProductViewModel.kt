@@ -106,7 +106,13 @@ class ProductViewModel @Inject constructor(
                 }
             } catch (e: IOException) {
                 _uiState.update {
-                    it.copy(error = appContext.getString(R.string.error_network_prefix, e.localizedMessage), isLoadingList = false)
+                    it.copy(
+                        error = appContext.getString(
+                            R.string.error_network_prefix,
+                            e.localizedMessage
+                        ),
+                        isLoadingList = false
+                    )
                 }
             } catch (e: HttpException) {
                 _uiState.update {
