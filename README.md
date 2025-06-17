@@ -7,14 +7,13 @@ A modern Android application demonstrating a product listing and detail view bui
 Highlight the core functionalities your app offers. Be specific and enticing.
 
 * **Product List Screen:**
-    * [e.g., Displays a scrollable list of products with their name, price, and image.]
-    * [e.g., Dynamic search functionality to filter products by name.]
-    * [e.g., Loading state indicator for data fetching.]
-    * [e.g., Error handling and display for network issues.]
+    * Displays a scrollable list of products with their name, price, and image.
+    * Loading state indicator for data fetching.
+    * Error handling and display for network issues.
 * **Product Details Screen:**
-    * [e.g., Presents detailed information about a selected product, including a larger image, full description, and additional attributes.]
-    * [e.g., Image carousel for multiple product images (if applicable).]
-    * [e.g., "Add to Cart" or "Buy Now" functionality (if applicable).]
+    * Presents detailed information about a selected product,
+    *  including a larger image, full description, and additional attributes.
+    * "Add to List" or "Share" functionality.
 * **MVI Architecture:**
     * Clear separation of concerns using `Intent` for user actions, `State` for UI representation, and `Reducer` for state transitions.
     * Unidirectional data flow for predictable and debuggable state management.
@@ -30,12 +29,12 @@ List the key technologies, libraries, and tools used in your project.
     * [Optional: Specify if you used a particular MVI library or pattern, e.g., "Custom MVI implementation leveraging Kotlin Flows," or "Using Orbit MVI," or "Mavericks," etc.]
 * **Coroutines & Flow:** For asynchronous operations and reactive programming.
 * **Unit Testing:** Comprehensive test suite for business logic and state management.
-    * [e.g., JUnit 4/5 for testing framework.]
-    * [e.g., MockK/Mockito for mocking dependencies.]
-    * [e.g., Turbine for testing Kotlin Flows.]
-* **Dependency Injection:** [e.g., Hilt for Dagger-based DI.]
-* **Image Loading:** [e.g., Glide for efficient image loading and caching.]
-* **Networking:** [e.g., Retrofit with OkHttp for API communication.]
+    * JUnit 4/5 for testing framework
+    * MockK/Mockito for mocking dependencies
+    * Turbine for testing Kotlin Flows
+* **Dependency Injection:** Hilt for Dagger-based DI
+* **Image Loading:** [Glide for efficient image loading and caching.]
+* **Networking:** [Retrofit with OkHttp for API communication.]
 * **Gradle Kotlin DSL:** For build configuration.
 
 ## 📸 Screenshots
@@ -44,10 +43,20 @@ This is where your screenshots shine! Embed them directly or link to them. Use c
 
 | Product List Screen                                     | Product Details Screen                                  |
 | :------------------------------------------------------ | :------------------------------------------------------ |
-| ![Product List Screenshot 1 Description](Screenshots/ProductListScreen.png) | ![Product Details Screenshot 1 Description](path/to/screenshot2.png) |
-| *[Brief caption for screenshot 1]* | *[Brief caption for screenshot 2]* |
-| ![Product List Screenshot 2 Description](path/to/screenshot3.png) | ![Product Details Screenshot 2 Description](path/to/screenshot4.png) |
-| *[Brief caption for screenshot 3 (e.g., Search functionality)]* | *[Brief caption for screenshot 4 (e.g., Error state)]* |
+| ![AppLandingScreen](screenshots/AppLandingScreen.png)|![ProductListScreen](screenshots/ProductListScreen.png) |
+| *[AppLandingScreen]* | *[ProductListScreen]* |
+| ![productDetailScreen](screenshots/productDetailScreen.png)|![InternetExceptionScreen](screenshots/InternetExceptionScreen.png) |
+| *[productDetailScreen]* | *[InternetExceptionScreen]* |
+| ![Location Permission](screenshots/LocationPermission.png)|![Getting Location](screenshots/GettingLocation.png) |
+| *[LocationPermission)]* | *[GettingLocation]* |
+| ![AddToListScreen](screenshots/AddToListScreen.png)|![TopAppBarWishList](screenshots/TopAppBarWishList.png) |
+| *[AddToListScreen]* | *[TopAppBarWishList]* |
+| ![WishListScreen](screenshots/WishListScreen.png)|![SharingContentTOSocialApp](screenshots/SharingContentToSocialApp.png) |
+| *[WishListScreen]* | *[SharingContentToSocialApp]* |
+| ![WishListRemovedItem](screenshots/WishListRemovedItem.png)|![WishListScreen](screenshots/WishListScreen.png) |
+| *[WishListRemovedItem]* | *[WishListScreen]* |
+
+
 *Tip: For larger apps, you might use a dedicated `screenshots/` directory and link to them.*
 
 ## 📐 Architecture
