@@ -85,11 +85,11 @@ class ProductViewModel @Inject constructor(
                     _uiState.value.currentAddress
                 )
             }
-            is ProductScreenEvent.AddToWishlist -> toggleWishlist(event.product) // Use a single toggle function
+            is ProductScreenEvent.AddToWishlist -> toggleWishlist(event.product)
             ProductScreenEvent.ClearLastWishlistActionMessage -> {
                 _uiState.update { it.copy(lastWishlistActionMessage = null) }
             }
-            is ProductScreenEvent.RemoveFromWishlist -> toggleWishlist(event.product) // Use a single toggle function
+            is ProductScreenEvent.RemoveFromWishlist -> toggleWishlist(event.product)
 
 
         }
