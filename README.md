@@ -51,6 +51,8 @@ This is where your screenshots shine! Embed them directly or link to them. Use c
 | *[LocationPermission)]* | *[GettingLocation]* |
 | ![AddToListScreen](screenshots/AddToListScreen.png)|![TopAppBarWishList](screenshots/TopAppBarWishList.png) |
 | *[AddToListScreen]* | *[TopAppBarWishList]* |
+| ![AddToListSnackBarNotification](screenshots/AddToListSnackBarNotification.png)|![RemoveFromWishListNotification](screenshots/RemoveFromWishListNotification.png) |
+| *[AddToListSnackBarNotification]* | *[RemoveFromWishListNotification]* |
 | ![WishListScreen](screenshots/WishListScreen.png)|![SharingContentTOSocialApp](screenshots/SharingContentToSocialApp.png) |
 | *[WishListScreen]* | *[SharingContentToSocialApp]* |
 | ![WishListRemovedItem](screenshots/WishListRemovedItem.png)|![WishListScreen](screenshots/WishListScreen.png) |
