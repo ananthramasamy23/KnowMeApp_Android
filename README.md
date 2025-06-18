@@ -45,8 +45,8 @@ This is where your screenshots shine! Embed them directly or link to them. Use c
 | :------------------------------------------------------ | :------------------------------------------------------ |
 | ![AppLandingScreen](screenshots/AppLandingScreen.png)|![ProductListScreen](screenshots/ProductListScreen.png) |
 | *[AppLandingScreen]* | *[ProductListScreen]* |
-| ![productDetailScreen](screenshots/productDetailScreen.png)|![InternetExceptionScreen](screenshots/InternetExceptionScreen.png) |
-| *[productDetailScreen]* | *[InternetExceptionScreen]* |
+| ![productDetailScreen](screenshots/productDetailScreen.png)|![ProductSearchEngineScreen](screenshots/ProductSearchEngineScreen.png) |
+| *[productDetailScreen]* | *[ProductSearchEngineScreen]* |
 | ![Location Permission](screenshots/LocationPermission.png)|![Getting Location](screenshots/GettingLocation.png) |
 | *[LocationPermission)]* | *[GettingLocation]* |
 | ![AddToListScreen](screenshots/AddToListScreen.png)|![TopAppBarWishList](screenshots/TopAppBarWishList.png) |
@@ -57,6 +57,8 @@ This is where your screenshots shine! Embed them directly or link to them. Use c
 | *[WishListScreen]* | *[SharingContentToSocialApp]* |
 | ![WishListRemovedItem](screenshots/WishListRemovedItem.png)|![WishListScreen](screenshots/WishListScreen.png) |
 | *[WishListRemovedItem]* | *[WishListScreen]* |
+| ![InternetExceptionScreen](screenshots/InternetExceptionScreen.png)|![WishListScreen](screenshots/WishListScreen.png) |
+| *[InternetExceptionScreen]* | *[WishListScreen]* |
 
 
 *Tip: For larger apps, you might use a dedicated `screenshots/` directory and link to them.*

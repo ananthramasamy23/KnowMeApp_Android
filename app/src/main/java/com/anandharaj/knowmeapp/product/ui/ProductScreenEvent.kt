@@ -23,4 +23,6 @@ sealed interface ProductScreenEvent {
     data class AddToWishlist(val product: Product) : ProductScreenEvent
     object ClearLastWishlistActionMessage : ProductScreenEvent
     data class RemoveFromWishlist(val product: Product) : ProductScreenEvent
+    data class SearchProducts(val query: String) : ProductScreenEvent
+
 }

@@ -6,6 +6,7 @@
     <string name="error_unknown_occurred">An unknown error occurred.</string>
     <string name="retry_button_text">Retry</string>
     <string name="retry_icon_description">Retry</string>
+    <string name="search_icon_description">Search icon</string>
     <string name="no_products_found">No products found.</string>
     <string name="product_detail_title">Product Detail</string>
     <string name="back_button_description">Back</string>
@@ -41,7 +42,7 @@
     <string name="geocoding_invalid_coordinates_prefix">Geocoding invalid coordinates: %s</string>
     <string name="added_to_wishlist_message">"%1$s added to wishlist!"</string>
     <string name="removed_from_wishlist_message">"%1$s removed from wishlist!"</string>
-
+    <string name="search_products_placeholder">Search products...</string>
 
 </resources>
 
