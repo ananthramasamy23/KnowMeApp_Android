@@ -11,8 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anandharaj.knowmeapp.R
 import com.anandharaj.knowmeapp.product.data.Product
+import com.anandharaj.knowmeapp.product.utils.NavConstants
 import com.anandharaj.knowmeapp.product.utils.ProductListScreenTestTags
 import com.anandharaj.knowmeapp.product.utils.ProductListScreenTestTags.productItemImageTag
 import com.anandharaj.knowmeapp.product.utils.ProductListScreenTestTags.productItemTitleTag
@@ -52,38 +53,55 @@ fun ProductListScreen(
         Scaffold(
             modifier = Modifier.testTag(ProductListScreenTestTags.SCREEN_ROOT),
             topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.product_list_title),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .testTag(ProductListScreenTestTags.TOP_APP_BAR_TITLE),
-                        )
-                    },
-                    actions = {
-                        BadgedBox(modifier = Modifier.padding(6.dp), badge = {
-                            if (uiState.wishlistItems.isNotEmpty()) {
-                                Badge {
-                                    Text(uiState.wishlistItems.size.toString())
+                Column {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                text = stringResource(id = R.string.product_list_title),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .testTag(ProductListScreenTestTags.TOP_APP_BAR_TITLE),
+                            )
+                        },
+                        actions = {
+                            BadgedBox(modifier = Modifier.padding(6.dp), badge = {
+                                if (uiState.wishlistItems.isNotEmpty()) {
+                                    Badge {
+                                        Text(uiState.wishlistItems.size.toString())
+                                    }
+                                }
+                            }) {
+                                IconButton(onClick = {
+                                    navController.navigate(NavConstants.WISHLIST_SCREEN_ROUTE)
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.FavoriteBorder,
+                                        contentDescription = stringResource(id = R.string.wishlist_icon_description)
+                                    )
                                 }
                             }
-                        }) {
-                            IconButton(onClick = {
-                                navController.navigate("wishlist_screen")
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.FavoriteBorder,
-                                    contentDescription = stringResource(id = R.string.wishlist_icon_description)
-                                )
-                            }
-                        }
 
-                        Spacer(modifier = Modifier.size(8.dp))
-                    }
-                )
+                            Spacer(modifier = Modifier.size(8.dp))
+                        }
+                    )
+                    // Search Bar
+                    OutlinedTextField(
+                        value = uiState.searchQuery,
+                        onValueChange = { query ->
+                            viewModel.onEvent(ProductScreenEvent.SearchProducts(query))
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .testTag("search_text_field"),
+                        placeholder = { Text(stringResource(id = R.string.search_products_placeholder)) },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search_icon_description)) },
+                        singleLine = true,
+
+                    )
+                }
             }
         ) { paddingValues ->
             Box(
@@ -156,7 +174,7 @@ fun ProductListScreen(
                         }
                     }
 
-                    !uiState.products.isNullOrEmpty() -> {
+                    !uiState.products.isNullOrEmpty() || uiState.searchQuery.isNotEmpty() -> {
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -164,14 +182,13 @@ fun ProductListScreen(
                             contentPadding = PaddingValues(8.dp)
                         ) {
                             items(
-                                items = uiState.products!!,
+                                items = uiState.products.orEmpty(),
                                 key = { product -> product.id }) { product ->
                                 ProductListItem(
                                     product = product,
                                     onItemClick = {
                                         navController.navigate("product_detail/${product.id}")
                                     },
-
                                     modifier = Modifier
                                         .testTag(
                                             "${
@@ -208,7 +225,6 @@ fun ProductListScreen(
         }
     }
 }
-
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable

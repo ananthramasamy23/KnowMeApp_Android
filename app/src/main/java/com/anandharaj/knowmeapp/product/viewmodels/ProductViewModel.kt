@@ -38,6 +38,8 @@ class ProductViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ProductScreenState())
     val uiState: StateFlow<ProductScreenState> = _uiState.asStateFlow()
 
+    private var _allProducts: List<Product>? = null
+
     init {
         viewModelScope.launch {
             _uiState.collect { state ->
@@ -90,8 +92,7 @@ class ProductViewModel @Inject constructor(
                 _uiState.update { it.copy(lastWishlistActionMessage = null) }
             }
             is ProductScreenEvent.RemoveFromWishlist -> toggleWishlist(event.product)
-
-
+            is ProductScreenEvent.SearchProducts -> searchProducts(event.query)
         }
     }
 
@@ -109,6 +110,7 @@ class ProductViewModel @Inject constructor(
             _uiState.update { it.copy(isLoadingList = true, error = null) }
             try {
                 val products = repository.fetchProducts()
+                _allProducts = products // Store the original list
                 _uiState.update {
                     it.copy(products = products, isLoadingList = false)
                 }
@@ -142,6 +144,21 @@ class ProductViewModel @Inject constructor(
             }
         }
     }
+
+    private fun searchProducts(query: String) {
+        _uiState.update { currentState ->
+            val filteredProducts = if (query.isBlank()) {
+                _allProducts // If query is empty, show all products
+            } else {
+                _allProducts?.filter {
+                    it.title.contains(query, ignoreCase = true) ||
+                            it.summary.contains(query, ignoreCase = true)
+                }
+            }
+            currentState.copy(searchQuery = query, products = filteredProducts)
+        }
+    }
+
 
     private fun loadProductDetail(productId: Int) {
         viewModelScope.launch {

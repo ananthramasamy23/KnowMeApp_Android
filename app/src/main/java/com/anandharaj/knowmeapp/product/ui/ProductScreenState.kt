@@ -13,5 +13,7 @@ data class ProductScreenState(
     val currentAddress: String? = "Address not available.",
     val locationPermissionGranted: Boolean? = null,
     val wishlistItems: List<Product> = emptyList(),
-    val lastWishlistActionMessage: String? = null
+    val lastWishlistActionMessage: String? = null,
+    val searchQuery: String = ""
+
 )
