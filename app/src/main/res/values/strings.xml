@@ -23,6 +23,7 @@
     <string name="wishlist_empty_message">Your wishlist is empty!</string>
     <string name="product_image_description">Product image of %s</string>
     <string name="remove_from_wishlist">Remove from Wishlist</string>
+    <string name="error_fetching_product">Error fetching detail: %s</string>
     <string name="error_network_prefix">Network error: %s</string>
     <string name="error_server_prefix">Server error: %d</string>
     <string name="error_unexpected_prefix">Unexpected error: %s</string>

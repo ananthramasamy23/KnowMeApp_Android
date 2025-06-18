@@ -8,12 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.anandharaj.knowmeapp.R
 import com.anandharaj.knowmeapp.product.data.Product
 import com.anandharaj.knowmeapp.product.data.ProductDetail
+import com.anandharaj.knowmeapp.product.di.ResourceProvider
 import com.anandharaj.knowmeapp.product.repository.ProductRepository
 import com.anandharaj.knowmeapp.product.ui.ProductScreenEvent
 import com.anandharaj.knowmeapp.product.ui.ProductScreenState
 import com.anandharaj.knowmeapp.product.utils.LocationUtils
 import com.anandharaj.knowmeapp.product.utils.NetworkConnectivityChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,19 +30,18 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(
     private val repository: ProductRepository,
     private val networkConnectivityChecker: NetworkConnectivityChecker,
-    application: Application
+    application: Application,
+    @ApplicationContext private val context: Context,
+    private val resourceProvider: ResourceProvider,
 ) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(ProductScreenState())
     val uiState: StateFlow<ProductScreenState> = _uiState.asStateFlow()
 
-    private val appContext: Context
-        get() = getApplication<Application>().applicationContext
-
     init {
         viewModelScope.launch {
             _uiState.collect { state ->
-                state.wishlistItems.forEach { _->
+                state.wishlistItems.forEach { _ ->
                 }
             }
         }
@@ -61,7 +62,7 @@ class ProductViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isFetchingLocation = false,
-                            currentAddress = appContext.getString(R.string.location_permission_denied)
+                            currentAddress = resourceProvider.getString(R.string.location_permission_denied)
                         )
                     }
                 }
@@ -71,14 +72,15 @@ class ProductViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isFetchingLocation = false,
-                        currentAddress = event.address ?: appContext.getString(R.string.could_not_determine_address),
+                        currentAddress = event.address
+                            ?: resourceProvider.getString(R.string.could_not_determine_address),
                     )
                 }
             }
 
             is ProductScreenEvent.ShareProductWithLocation -> {
                 shareProductDetails(
-                    appContext,
+                    context,
                     _uiState.value.selectedProduct,
                     _uiState.value.currentAddress
                 )
@@ -94,7 +96,10 @@ class ProductViewModel @Inject constructor(
         viewModelScope.launch {
             if (!networkConnectivityChecker.isNetworkAvailable()) {
                 _uiState.update {
-                    it.copy(error = appContext.getString(R.string.error_no_internet_connection), isLoadingList = false)
+                    it.copy(
+                        error = resourceProvider.getString(R.string.error_no_internet_connection),
+                        isLoadingList = false
+                    )
                 }
                 return@launch
             }
@@ -107,7 +112,7 @@ class ProductViewModel @Inject constructor(
             } catch (e: IOException) {
                 _uiState.update {
                     it.copy(
-                        error = appContext.getString(
+                        error = resourceProvider.getString(
                             R.string.error_network_prefix,
                             e.localizedMessage
                         ),
@@ -116,12 +121,18 @@ class ProductViewModel @Inject constructor(
                 }
             } catch (e: HttpException) {
                 _uiState.update {
-                    it.copy(error = appContext.getString(R.string.error_server_prefix, e.code()), isLoadingList = false)
+                    it.copy(
+                        error = resourceProvider.getString(R.string.error_server_prefix, e.code()),
+                        isLoadingList = false
+                    )
                 }
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(
-                        error = appContext.getString(R.string.error_unexpected_prefix, e.localizedMessage),
+                        error = resourceProvider.getString(
+                            R.string.error_unexpected_prefix,
+                            e.localizedMessage
+                        ),
                         isLoadingList = false
                     )
                 }
@@ -133,7 +144,10 @@ class ProductViewModel @Inject constructor(
         viewModelScope.launch {
             if (!networkConnectivityChecker.isNetworkAvailable()) {
                 _uiState.update {
-                    it.copy(error = appContext.getString(R.string.error_no_internet_connection), isLoadingDetail = false)
+                    it.copy(
+                        error = resourceProvider.getString(R.string.error_no_internet_connection),
+                        isLoadingDetail = false
+                    )
                 }
                 return@launch
             }
@@ -152,21 +166,27 @@ class ProductViewModel @Inject constructor(
             } catch (e: IOException) {
                 _uiState.update {
                     it.copy(
-                        error = appContext.getString(R.string.error_network_prefix, "fetching detail: ${e.localizedMessage}"),
+                        error = resourceProvider.getString(
+                            R.string.error_network_prefix,
+                            "fetching detail: ${e.localizedMessage}"
+                        ),
                         isLoadingDetail = false
                     )
                 }
             } catch (e: HttpException) {
                 _uiState.update {
                     it.copy(
-                        error = appContext.getString(R.string.error_server_prefix, e.code()),
+                        error = resourceProvider.getString(R.string.error_server_prefix, e.code()),
                         isLoadingDetail = false
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(
-                        error = appContext.getString(R.string.error_unexpected_prefix, "fetching detail: ${e.localizedMessage}"),
+                        error = resourceProvider.getString(
+                            R.string.error_unexpected_prefix,
+                            "fetching detail: ${e.localizedMessage}"
+                        ),
                         isLoadingDetail = false
                     )
                 }
@@ -195,11 +215,15 @@ class ProductViewModel @Inject constructor(
                 viewModel.onEvent(
                     ProductScreenEvent.LocationFetched(
                         null,
-                        appContext.getString(R.string.could_not_get_current_location)
+                        resourceProvider.getString(R.string.could_not_get_current_location)
                     )
                 )
                 product?.let { prod ->
-                    shareProductDetails(context, prod, appContext.getString(R.string.location_unknown))
+                    shareProductDetails(
+                        context,
+                        prod,
+                        resourceProvider.getString(R.string.location_unknown)
+                    )
                 }
             }
         }
@@ -223,18 +247,21 @@ class ProductViewModel @Inject constructor(
     }
 
     fun shareProductDetails(context: Context, product: ProductDetail?, address: String?) {
-        val shareText = appContext.getString(
+        val shareText = resourceProvider.getString(
             R.string.share_product_text,
             product?.title ?: "",
             product?.price ?: "",
-            address ?: appContext.getString(R.string.location_unknown)
+            address ?: resourceProvider.getString(R.string.location_unknown)
         )
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, shareText)
             type = "text/plain"
         }
-        val shareIntent = Intent.createChooser(sendIntent, appContext.getString(R.string.share_product_title, product?.title ?: ""))
+        val shareIntent = Intent.createChooser(
+            sendIntent,
+            resourceProvider.getString(R.string.share_product_title, product?.title ?: "")
+        )
         context.startActivity(shareIntent)
     }
 }
