@@ -17,7 +17,7 @@ Highlight the core functionalities your app offers. Be specific and enticing.
 * **MVI Architecture:**
     * Clear separation of concerns using `Intent` for user actions, `State` for UI representation, and `Reducer` for state transitions.
     * Unidirectional data flow for predictable and debuggable state management.
-    * Handles side effects efficiently [e.g., using `Flow`, `Channel`, or a dedicated effect handler].
+    * Handles side effects efficiently [e.g., using `Flow`, or a dedicated effect handler].
 
 ## 🚀 Technologies Used
 
