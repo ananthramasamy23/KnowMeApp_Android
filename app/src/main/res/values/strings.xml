@@ -39,7 +39,8 @@
     <string name="geocoding_unknown_error">Unknown error</string>
     <string name="geocoding_io_error_prefix">Geocoding I/O error: %s</string>
     <string name="geocoding_invalid_coordinates_prefix">Geocoding invalid coordinates: %s</string>
-
+    <string name="added_to_wishlist_message">"%1$s added to wishlist!"</string>
+    <string name="removed_from_wishlist_message">"%1$s removed from wishlist!"</string>
 
 
 </resources>

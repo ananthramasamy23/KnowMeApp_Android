@@ -12,5 +12,6 @@ data class ProductScreenState(
     val isFetchingLocation: Boolean = false,
     val currentAddress: String? = "Address not available.",
     val locationPermissionGranted: Boolean? = null,
-    val wishlistItems: List<Product> = emptyList()
+    val wishlistItems: List<Product> = emptyList(),
+    val lastWishlistActionMessage: String? = null
 )
