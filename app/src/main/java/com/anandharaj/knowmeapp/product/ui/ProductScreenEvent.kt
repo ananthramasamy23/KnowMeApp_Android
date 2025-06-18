@@ -21,5 +21,6 @@ sealed interface ProductScreenEvent {
     object ShareProductWithLocation :
         ProductScreenEvent
     data class AddToWishlist(val product: Product) : ProductScreenEvent
+    object ClearLastWishlistActionMessage : ProductScreenEvent
     data class RemoveFromWishlist(val product: Product) : ProductScreenEvent
 }

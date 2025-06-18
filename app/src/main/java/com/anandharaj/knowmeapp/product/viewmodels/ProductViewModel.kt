@@ -85,9 +85,12 @@ class ProductViewModel @Inject constructor(
                     _uiState.value.currentAddress
                 )
             }
+            is ProductScreenEvent.AddToWishlist -> toggleWishlist(event.product)
+            ProductScreenEvent.ClearLastWishlistActionMessage -> {
+                _uiState.update { it.copy(lastWishlistActionMessage = null) }
+            }
+            is ProductScreenEvent.RemoveFromWishlist -> toggleWishlist(event.product)
 
-            is ProductScreenEvent.AddToWishlist -> addToWishlist(event.product)
-            is ProductScreenEvent.RemoveFromWishlist -> removeFromWishlist(event.product)
 
         }
     }
@@ -229,20 +232,26 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    private fun addToWishlist(product: Product) {
-        _uiState.update { currentState ->
-            val currentWishlist = currentState.wishlistItems.toMutableList()
-            if (!currentWishlist.any { it.id == product.id }) {
-                currentWishlist.add(product)
-            }
-            currentState.copy(wishlistItems = currentWishlist)
-        }
-    }
+    private fun toggleWishlist(product: Product) {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                val currentWishlist = currentState.wishlistItems.toMutableList()
+                val isCurrentlyInWishlist = currentWishlist.any { it.id == product.id }
+                val message: String
 
-    private fun removeFromWishlist(product: Product) {
-        _uiState.update { currentState ->
-            val updatedWishlist = currentState.wishlistItems.filter { it.id != product.id }
-            currentState.copy(wishlistItems = updatedWishlist)
+                if (isCurrentlyInWishlist) {
+                    currentWishlist.removeIf { it.id == product.id }
+                    message = resourceProvider.getString(R.string.removed_from_wishlist_message, product.title)
+                } else {
+                    currentWishlist.add(product)
+                    message = resourceProvider.getString(R.string.added_to_wishlist_message, product.title)
+                }
+
+                currentState.copy(
+                    wishlistItems = currentWishlist,
+                    lastWishlistActionMessage = message
+                )
+            }
         }
     }
 

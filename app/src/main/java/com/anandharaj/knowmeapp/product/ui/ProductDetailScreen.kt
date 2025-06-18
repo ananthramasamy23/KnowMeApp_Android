@@ -46,6 +46,7 @@ import com.anandharaj.knowmeapp.product.data.Product
 import com.anandharaj.knowmeapp.product.utils.ProductListScreenTestTags
 import com.anandharaj.knowmeapp.ui.theme.KnowMeAppTheme
 import com.google.accompanist.permissions.MultiplePermissionsState
+import kotlinx.coroutines.launch
 
 
 @OptIn(
@@ -58,6 +59,8 @@ fun ProductDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val snackBarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     DisposableEffect(Unit) {
         LocationUtils.initializeLocationClient(context)
@@ -80,9 +83,22 @@ fun ProductDetailScreen(
     LaunchedEffect(productId) {
         viewModel.onEvent(ProductScreenEvent.LoadProductDetail(productId))
     }
+    LaunchedEffect(uiState.lastWishlistActionMessage) {
+        uiState.lastWishlistActionMessage?.let { message ->
+            coroutineScope.launch {
+                snackBarHostState.showSnackbar(
+                    message = message,
+                    withDismissAction = true,
+                    duration = SnackbarDuration.Short
+                )
+                viewModel.onEvent(ProductScreenEvent.ClearLastWishlistActionMessage)
+            }
+        }
+    }
     KnowMeAppTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            snackbarHost = { SnackbarHost(snackBarHostState) },
             topBar = {
                 TopAppBar(
                     modifier = Modifier.fillMaxWidth(),
@@ -107,6 +123,7 @@ fun ProductDetailScreen(
                             )
                         }
                     }
+
                 )
             }
         ) { paddingValues ->
@@ -183,7 +200,12 @@ fun ProductDetailContentWrapper(
                 summary = productToAddToWishlist.description,
                 imageUrl = productToAddToWishlist.imageUrl
             )
-            viewModel.onEvent(ProductScreenEvent.AddToWishlist(productForWishlist))
+            val isAdding = !uiState.wishlistItems.any { it.id == productToAddToWishlist.id }
+            if (isAdding){
+                viewModel.onEvent(ProductScreenEvent.AddToWishlist(productForWishlist))
+            }else{
+                viewModel.onEvent(ProductScreenEvent.RemoveFromWishlist(productForWishlist))
+            }
         },
         isProductInWishlist = uiState.wishlistItems.any { it.id == productDetails.id }
     )
@@ -222,7 +244,7 @@ private fun ColumnScope.WishListItem(
                 imageVector = if (isProductInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = if (isProductInWishlist) stringResource(id = R.string.remove_from_wishlist_description) else stringResource(
                     id = R.string.add_to_wishlist_description
-                ), // Use string resources
+                ),
                 tint = if (isProductInWishlist) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
             )
         }
